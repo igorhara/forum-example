@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
+        httpSecurity.csrf().disable();
+        httpSecurity.formLogin().loginPage("/api/login").and().logout().logoutUrl("/api/logout");
     }
 
     @Override

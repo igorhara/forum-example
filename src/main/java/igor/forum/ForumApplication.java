@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 
+import java.util.stream.IntStream;
+
 @SpringBootApplication
 public class ForumApplication {
 
@@ -39,13 +41,18 @@ public class ForumApplication {
 		return (args) -> {
 			UserForum user = userService.getUserByUsername("first");
 
-			Post firstPost = new Post();
-			firstPost.setTitle("First Post!");
-			firstPost.setContent(" This is the first post created!");
-			firstPost.setCategory(CategoryPost.SUGGESTION);
-			firstPost.setOwner(user.getUsername());
-			postService.createPost(firstPost);
-			log.info("1st post created");
+			IntStream.range(1,11).forEach(i->{
+				Post post = new Post();
+				post.setTitle("Post number: "+i);
+				post.setContent(" This is the "+i+ " post created!");
+				post.setCategory(CategoryPost.values()[i%CategoryPost.values().length]);
+				post.setOwner(user.getUsername());
+				postService.createPost(post);
+				log.info("1st post created");
+			});
+
+
+
 
 		};
 	}

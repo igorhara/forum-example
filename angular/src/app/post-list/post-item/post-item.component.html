@@ -1,8 +1,16 @@
-<div class="card">
-  <div class="card-block">
-    <h4 class="card-title">{{post.title}}</h4>
-    <h6 class="card-subtitle mb-2 text-muted">{{post.category}}</h6>
-    <p class="card-text">{{post.content}}</p>
-    <p class="card-text"><small class="text-muted">{{post.owner}} - {{post.creationDate | date:'short'}}</small></p>
+<div class="row" >
+  <div class="col-12">
+    <div class="card mb-2">
+      <div class="card-header">
+        <h4 class="card-title">{{post.title}}</h4>
+        <h6 class="card-subtitle text-muted text-right">{{post.category}}</h6>
+      </div>
+      <div class="card-block">
+        <p class="card-text mx-3 my-3">{{post.content}}</p>
+        <p
+          class="card-text text-right mx-3"><small class="text-muted">{{post.owner}} - {{post.creationDate |
+          date:'short'}}</small></p>
+      </div>
+    </div>
   </div>
 </div>

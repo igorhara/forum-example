@@ -1,7 +1,9 @@
 package igor.forum.controller.rest;
 
 import igor.forum.model.Post;
+import igor.forum.model.UserForum;
 import igor.forum.service.PostService;
+import igor.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,9 @@ public class PostController {
     @Autowired
     PostService service;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping(path = "/all")
     public List<Post> getAllPosts(){
        return service.listPosts();
@@ -23,6 +28,7 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody Post post){
+        post.setOwner("first");
        return service.createPost(post);
     }
 }

@@ -33,7 +33,20 @@ public class PostService {
        return post;
     }
 
+
+    public Post updatePost(Post post){
+        Post persistedPost = getPostForEdit(post.getId());
+        persistedPost.setTitle(post.getTitle());
+        persistedPost.setContent(post.getContent());
+        persistedPost.setCategory(post.getCategory());
+        return createPost(persistedPost);
+    }
+
     public List<Post>  listPosts(){
         return dao.findAllByOrderByCreationDateDesc();
+    }
+
+    public Post getPostForEdit(Long id){
+        return dao.findOne(id);
     }
 }

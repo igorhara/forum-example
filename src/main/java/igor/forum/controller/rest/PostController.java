@@ -31,4 +31,12 @@ public class PostController {
         post.setOwner("first");
        return service.createPost(post);
     }
+    @GetMapping(path = "/edit/{id}")
+    public Post getPostForEdit(@PathVariable Long id){
+        return service.getPostForEdit(id);
+    }
+    @PutMapping
+    public Post updatePost(@RequestBody Post post){
+        return service.updatePost(post);
+    }
 }

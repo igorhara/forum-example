@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 /**
  * Created by igorhara on 20/01/2018.
  */
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -44,13 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable();
-        httpSecurity.formLogin().loginPage("/api/login").and().logout().logoutUrl("/api/logout");
+        httpSecurity.formLogin().loginProcessingUrl("/api/login").usernameParameter("login").successForwardUrl
+                ("/api/user/isLogged").and().logout().logoutUrl
+                ("/api/user/logout").logoutSuccessUrl("/api/isLogged");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(authProvider());
     }
     @Bean
     public CorsFilter corsFilter() {

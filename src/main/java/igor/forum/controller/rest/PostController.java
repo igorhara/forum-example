@@ -5,9 +5,12 @@ import igor.forum.model.UserForum;
 import igor.forum.service.PostService;
 import igor.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by igorhara on 20/01/2018.
@@ -32,8 +35,9 @@ public class PostController {
        return service.createPost(post);
     }
     @GetMapping(path = "/edit/{id}")
-    public Post getPostForEdit(@PathVariable Long id){
-        return service.getPostForEdit(id);
+    public ResponseEntity<Post> getPostForEdit(@PathVariable Long id){
+        return Optional.ofNullable(service.getPostForEdit(id)).map(ResponseEntity::ok).orElse(new
+                ResponseEntity<Post>(HttpStatus.NOT_FOUND));
     }
     @PutMapping
     public Post updatePost(@RequestBody Post post){

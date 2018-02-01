@@ -9,7 +9,8 @@
         <p class="card-text mx-3 my-3">{{post.content}}</p>
         <p
           class="card-text text-right mx-3"><small class="text-muted">{{post.owner}} - {{post.creationDate |
-          date:'short'}}</small></p>
+          date:'short'}}</small>
+          <a routerLink="/post/edit/{{post.id}}">Edit</a></p>
       </div>
     </div>
   </div>

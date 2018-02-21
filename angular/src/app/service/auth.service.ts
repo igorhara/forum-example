@@ -14,8 +14,8 @@ export class AuthService{
 
   }
 
-  login(loginForm:any):Observable<UserDetail>{
-      return this.http.post<UserDetail>("api/login",null,{params:loginForm}).do(
+  login(user:User):Observable<UserDetail>{
+      return this.http.post<UserDetail>("api/user/login",user).do(
         (u:UserDetail)=>{
           console.log(u);
           this.userCache = u;
@@ -28,7 +28,7 @@ export class AuthService{
   }
 
   logout():Observable<any>{
-      return this.http.post<any>("api/logout",null).do(()=>this.userCache=null);
+      return this.http.post<any>("api/user/logout",null).do(()=>this.userCache=null);
   }
 
 
@@ -40,4 +40,9 @@ export class AuthService{
 
 export interface UserDetail{
     username:string;
+}
+export interface User{
+  username:string;
+  password:string;
+
 }

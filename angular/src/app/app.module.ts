@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { PostListComponent } from './post-list/post-list.component';
 import { PostItemComponent } from './post-list/post-item/post-item.component';
 import {PostService} from "./service/post.service";
@@ -13,6 +13,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-routing.module";
 import { LoginComponent } from './login/login.component';
 import {AuthService} from "./service/auth.service";
+import { PostDetailComponent } from './post-detail/post-detail.component';
+import {HttpErrorInterceptor} from "./service/http-error.interceptor";
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import {AuthService} from "./service/auth.service";
     PostItemComponent,
     HeaderComponent,
     PostFormComponent,
-    LoginComponent
+    LoginComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,12 @@ import {AuthService} from "./service/auth.service";
   ],
   providers: [
     PostService,
-    AuthService
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

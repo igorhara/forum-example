@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../service/auth.service";
+import {AuthService, User} from "../service/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,14 +16,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      login: [,Validators.required],
+      username: [,Validators.required],
       password:[,Validators.required]
     });
   }
 
 
   onSubmit(){
-    var login:any = this.loginForm.value;
+    var login:User = this.loginForm.value;
     this.auth.login(login).subscribe(p=>this.router.navigate(['/']));
   }
 

@@ -45,9 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable();
-        httpSecurity.formLogin().loginProcessingUrl("/api/login").usernameParameter("login").successForwardUrl
-                ("/api/user/isLogged").and().logout().logoutUrl
-                ("/api/user/logout").logoutSuccessUrl("/api/isLogged");
+        httpSecurity.httpBasic().disable();
+        
     }
 
     @Override

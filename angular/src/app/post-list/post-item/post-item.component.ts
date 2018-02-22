@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../model/post.model";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-post-item',
@@ -9,9 +10,14 @@ import {Post} from "../../model/post.model";
 export class PostItemComponent implements OnInit {
 
   @Input() post:Post;
-  constructor() { }
+  constructor(private auth:AuthService) { }
 
   ngOnInit() {
+  }
+
+
+  canEdit(){
+    return this.auth.isCurrentUser(this.post.owner);
   }
 
 }

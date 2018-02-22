@@ -13,9 +13,7 @@ export class PostEditResolve implements Resolve<Post>{
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Post> | Promise<Post> | Post {
     let id:number = +route.params['id'];
-    console.log(route);
-    console.log(state);
-    console.log(this.router);
+
 
     return this.postService.loadPost(id).catch(error=>{
       this.router.navigate([this.router.url]);

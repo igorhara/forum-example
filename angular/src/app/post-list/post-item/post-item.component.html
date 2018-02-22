@@ -2,7 +2,7 @@
   <div class="col-12">
     <div class="card mb-2">
       <div class="card-header">
-        <h4 class="card-title">{{post.title}}</h4>
+        <h4 class="card-title"><a style="cursor:pointer;" routerLink="/post/view/{{post.id}}">{{post.title}}</a></h4>
         <h6 class="card-subtitle text-muted text-right">{{post.category}}</h6>
       </div>
       <div class="card-block">
@@ -10,7 +10,7 @@
         <p
           class="card-text text-right mx-3"><small class="text-muted">{{post.owner}} - {{post.creationDate |
           date:'short'}}</small>
-          <a routerLink="/post/edit/{{post.id}}">Edit</a></p>
+          <a *ngIf="canEdit()" routerLink="/post/edit/{{post.id}}">Edit</a></p>
       </div>
     </div>
   </div>

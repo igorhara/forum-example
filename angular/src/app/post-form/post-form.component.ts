@@ -50,5 +50,8 @@ export class PostFormComponent implements OnInit {
 
 
   }
+  onCancel(){
+    this.router.navigate(["/"]);
+  }
 
 }

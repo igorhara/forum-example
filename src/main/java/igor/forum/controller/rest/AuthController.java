@@ -11,14 +11,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.util.Optional;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -48,8 +47,8 @@ public class AuthController {
             logger.debug("Logging in with [{}]", authentication.getPrincipal());
             SecurityContext sc = SecurityContextHolder.getContext();
             sc.setAuthentication(authentication);
-            HttpSession session = request.getSession(true);
-            session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+            /*HttpSession session = request.getSession(true);
+            session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);*/
         } catch (AuthenticationException e){
             SecurityContextHolder.getContext().setAuthentication(null);
             logger.error("Failure in autoLogin", e);
@@ -57,5 +56,17 @@ public class AuthController {
         }
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userDetails;
+    }
+
+    @GetMapping(path = "/login")
+    public UserDetails isLoggedIn(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return Optional.ofNullable(authentication).map(a->(UserDetails)a.getPrincipal()).orElse(null);
+    }
+
+    @GetMapping(path = "/logout")
+    public void logout(HttpSession session){
+        SecurityContextHolder.getContext().setAuthentication(null);
+        session.invalidate();
     }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {AuthService} from "./service/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ export class AppComponent {
   title = 'app';
 
 
-  constructor(){
+  constructor(private auth:AuthService){
+    this.auth.checkLogin();
 
   }
 

@@ -17,10 +17,15 @@ export class AuthService{
   login(user:User):Observable<UserDetail>{
       return this.http.post<UserDetail>("api/user/login",user).do(
         (u:UserDetail)=>{
-          console.log(u);
           this.userCache = u;
         });
 
+  }
+
+  checkLogin(){
+    this.http.get<UserDetail>("api/user/login").subscribe((u:UserDetail)=>{
+      this.userCache = u;
+    })
   }
 
   isLogged():boolean{
@@ -28,12 +33,19 @@ export class AuthService{
   }
 
   logout():Observable<any>{
-      return this.http.post<any>("api/user/logout",null).do(()=>this.userCache=null);
+      return this.http.get<any>("api/user/logout").subscribe(()=>this.userCache=null);
   }
 
 
   get user():UserDetail{
     return this.userCache;
+  }
+
+  isCurrentUser(login:string):boolean{
+    if(!this.isLogged()){
+      return false;
+    }
+    return this.user.username===login;
   }
 
 }

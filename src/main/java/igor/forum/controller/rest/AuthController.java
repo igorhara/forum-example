@@ -61,7 +61,8 @@ public class AuthController {
     @GetMapping(path = "/login")
     public UserDetails isLoggedIn(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return Optional.ofNullable(authentication).map(a->(UserDetails)a.getPrincipal()).orElse(null);
+        return Optional.ofNullable(authentication).map(Authentication::getPrincipal).filter(p-> p instanceof UserDetails)
+                .map(p-> (UserDetails)p).orElse(null);
     }
 
     @GetMapping(path = "/logout")

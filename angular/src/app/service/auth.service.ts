@@ -32,8 +32,8 @@ export class AuthService{
     return this.userCache !=null;
   }
 
-  logout():Observable<any>{
-      return this.http.get<any>("api/user/logout").subscribe(()=>this.userCache=null);
+  logout(){
+    this.http.get<any>("api/user/logout").subscribe(()=>this.userCache=null);
   }
 
 

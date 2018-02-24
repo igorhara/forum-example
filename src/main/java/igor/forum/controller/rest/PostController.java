@@ -37,9 +37,13 @@ public class PostController {
        return service.createPost(post);
     }
     @GetMapping(path = "/edit/{id}")
-    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Post> getPostForEdit(@PathVariable Long id){
         return Optional.ofNullable(service.getPostForEdit(id)).map(ResponseEntity::ok).orElse(new
+                ResponseEntity<Post>(HttpStatus.NOT_FOUND));
+    }
+    @GetMapping(path = "/view/{id}")
+    public ResponseEntity<Post> getPost(@PathVariable Long id){
+        return Optional.ofNullable(service.getPost(id)).map(ResponseEntity::ok).orElse(new
                 ResponseEntity<Post>(HttpStatus.NOT_FOUND));
     }
     @PutMapping

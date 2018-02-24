@@ -12,4 +12,6 @@ import java.util.List;
 public interface PostDao extends CrudRepository<Post,Long> {
 
     List<Post> findAllByOrderByCreationDateDesc();
+
+    Post getByIdAndOwner(Long id, String owner);
 }

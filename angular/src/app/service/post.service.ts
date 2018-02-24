@@ -20,6 +20,9 @@ export class PostService{
   loadPost(id: number):Observable<Post> {
      return this.http.get<Post>('api/post/edit/'+id);
   }
+  loadPostView(id: number):Observable<Post> {
+     return this.http.get<Post>('api/post/view/'+id);
+  }
 
   updatePost(post:Post):Observable<Post>{
     return this.http.put<Post>("api/post",post);

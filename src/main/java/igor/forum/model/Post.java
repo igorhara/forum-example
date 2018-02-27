@@ -1,5 +1,6 @@
 package igor.forum.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.SortedSet;
 
 /**
@@ -42,8 +44,9 @@ public class Post {
     @CreationTimestamp
     Timestamp creationDate;
 
+
     @OneToMany(mappedBy = "post")
     @OrderBy("creationDate asc")
-    SortedSet<Comment> comments;
+    List<Comment> comments;
 
 }

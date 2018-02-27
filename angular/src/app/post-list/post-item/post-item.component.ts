@@ -10,6 +10,7 @@ import {AuthService} from "../../service/auth.service";
 export class PostItemComponent implements OnInit {
 
   @Input() post:Post;
+  @Input() canNavigate:boolean = true;
   constructor(private auth:AuthService) { }
 
   ngOnInit() {

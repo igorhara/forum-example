@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import {AuthService} from "./service/auth.service";
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import {HttpErrorInterceptor} from "./service/http-error.interceptor";
+import { CommentItemComponent } from './post-detail/comment-item/comment-item.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {HttpErrorInterceptor} from "./service/http-error.interceptor";
     HeaderComponent,
     PostFormComponent,
     LoginComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    CommentItemComponent
   ],
   imports: [
     BrowserModule,

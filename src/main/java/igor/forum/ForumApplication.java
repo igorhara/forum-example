@@ -1,6 +1,7 @@
 package igor.forum;
 
 import igor.forum.model.CategoryPost;
+import igor.forum.model.Comment;
 import igor.forum.model.Post;
 import igor.forum.model.UserForum;
 import igor.forum.service.PostService;
@@ -50,6 +51,16 @@ public class ForumApplication {
 				postService.createPost(post);
 				log.info("1st post created");
 			});
+			IntStream.range(1,11).forEach(i->{
+
+				Comment c = new Comment();
+				c.setContent("Content number "+i);
+				c.setPost(postService.getPost(Long.valueOf(i)));
+				c.setOwner("sec");
+				postService.createComment(c);
+				log.info(i+"+comment created");
+			});
+
 
 
 

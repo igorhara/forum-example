@@ -1,7 +1,9 @@
 package igor.forum.service;
 
 import igor.forum.CheckOwner;
+import igor.forum.dao.CommentDao;
 import igor.forum.dao.PostDao;
+import igor.forum.model.Comment;
 import igor.forum.model.Post;
 import igor.forum.model.UserForum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class PostService {
     @Autowired
     PostDao dao;
     @Autowired
+    CommentDao commentDao;
+    @Autowired
     UserService userService;
 
     public Post createPost(Post post,String usernameOwner){
@@ -35,6 +39,11 @@ public class PostService {
     public Post createPost(@Valid Post post){
        Post saved = dao.save(post);
        return post;
+    }
+
+    public Comment createComment(@Valid Comment comment){
+        Comment c = commentDao.save(comment);
+        return comment;
     }
 
     @CheckOwner

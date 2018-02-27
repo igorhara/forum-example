@@ -1,0 +1,13 @@
+<div class="row" >
+  <div class="col-12">
+    <div class="card mb-2">
+      <div class="card-block">
+        <p class="card-text mx-3 my-3">{{comment.content}}</p>
+        <p
+          class="card-text text-right mx-3"><small class="text-muted">{{comment.owner}} - {{comment.creationDate |
+          date:'short'}}</small>
+          <a *ngIf="canEdit()" routerLink="/comment/edit/{{comment.id}}">Edit</a></p>
+      </div>
+    </div>
+  </div>
+</div>

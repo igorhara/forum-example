@@ -1,3 +1,4 @@
+import {Comment} from "./comment.model";
 export class Post{
   id:number;
   title:string;
@@ -5,4 +6,5 @@ export class Post{
   owner:string;
   creationDate:Date;
   category:string;
+  comments:Comment[];
 }

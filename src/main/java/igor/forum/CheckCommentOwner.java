@@ -12,6 +12,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("hasAuthority('USER')")
-@PostAuthorize("@postService.isOwner(returnObject, principal?.username)")
-public @interface CheckOwner {
+@PostAuthorize("@postService.isCommentOwner(returnObject, principal?.username)")
+public @interface CheckCommentOwner {
 }

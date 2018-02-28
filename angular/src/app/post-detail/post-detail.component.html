@@ -1,6 +1,7 @@
 <app-post-item [canNavigate]="false" [post]="post"></app-post-item>
-<div class="row justify-content-center">
+<input class="row justify-content-center">
   <div class="col-12">
     <app-comment-item *ngFor="let comment of post.comments" [comment]="comment"></app-comment-item>
   </div>
+  <button type="button" class="btn btn-dark" (click)="createComment()">Create Comment</button>
 </div>

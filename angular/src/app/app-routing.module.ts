@@ -6,6 +6,8 @@ import {PostEditResolve} from "./post-form/post-edit.resolve";
 import {LoginComponent} from "./login/login.component";
 import {PostDetailComponent} from "./post-detail/post-detail.component";
 import {PostViewResolve} from "./post-detail/post-view.resolve";
+import {CommentEditResolve} from "./comment-form/comment-edit.resolve";
+import {CommentFormComponent} from "./comment-form/comment-form.component";
 
 
 const appRoutes:Routes = [
@@ -13,14 +15,16 @@ const appRoutes:Routes = [
   {path:'login',component:LoginComponent},
   {path:'post/create',component:PostFormComponent},
   {path:'post/edit/:id',component:PostFormComponent,resolve:{post:PostEditResolve}},
-  {path:'post/view/:id',component:PostDetailComponent,resolve:{post:PostViewResolve}}
+  {path:'post/view/:id',component:PostDetailComponent,resolve:{post:PostViewResolve}},
+  {path:'comment/edit/:id',component:CommentFormComponent,resolve:{post:CommentEditResolve}},
+  {path:'comment/create/:postId',component:CommentFormComponent}
 ];
 @NgModule({
   imports:[
     RouterModule.forRoot(appRoutes)
   ],
   exports: [RouterModule],
-  providers:[PostEditResolve, PostViewResolve]
+  providers:[PostEditResolve, PostViewResolve,CommentEditResolve]
 })
 
 export class AppRoutingModule{

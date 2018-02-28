@@ -26,4 +26,8 @@ export class PostDetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  createComment(){
+    this.router.navigate(["/comment/create",this.post.id]);
+  }
+
 }

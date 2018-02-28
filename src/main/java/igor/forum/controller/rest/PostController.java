@@ -5,16 +5,12 @@ import igor.forum.dto.PostDTO;
 import igor.forum.dto.PostSimpleDTO;
 import igor.forum.model.Comment;
 import igor.forum.model.Post;
-import igor.forum.model.UserForum;
 import igor.forum.service.PostService;
 import igor.forum.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,20 +40,36 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody Post post){
-        post.setOwner("first");
-       return service.createPost(post);
+       return service.createPost(post,"first");
     }
     @GetMapping(path = "/edit/{id}")
     public ResponseEntity<PostSimpleDTO> getPostForEdit(@PathVariable Long id){
         return Optional.ofNullable(service.getPostForEdit(id)).map(this::convertToPostSimpleDto).map
                 (ResponseEntity::ok).orElse(new
-                ResponseEntity<PostSimpleDTO>(HttpStatus.NOT_FOUND));
+                ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    @PostMapping(path = "/comment")
+    public Comment createComment(@RequestBody Comment comment){
+        return service.createComment(comment,"first");
+    }
+
+    @GetMapping(path = "comment/{id}")
+    public ResponseEntity<CommentDTO> getCommentForEdit(@PathVariable Long id){
+        return Optional.ofNullable(service.getCommentForEdit(id)).map(this::convertToCommentDTO).map
+                (ResponseEntity::ok).orElse(new
+                ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @GetMapping(path = "/view/{id}")
     public ResponseEntity<PostDTO> getPost(@PathVariable Long id){
         return Optional.ofNullable(service.getPost(id)).map(this::convertoToPostDTO).map(ResponseEntity::ok).orElse(new
-                ResponseEntity<PostDTO>(HttpStatus.NOT_FOUND));
+                ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping(path = "/comment")
+    public Comment updateComment(@RequestBody Comment comment){
+        return service.updateComment(comment);
+    }
+
     @PutMapping
     public Post updatePost(@RequestBody Post post){
         return service.updatePost(post);
@@ -71,6 +83,10 @@ public class PostController {
 
     private PostDTO convertoToPostDTO(Post post){
         PostDTO map = modelMapper.map(post, PostDTO.class);
+        return map;
+    }
+    private CommentDTO convertToCommentDTO(Comment c){
+        CommentDTO map = modelMapper.map(c, CommentDTO.class);
         return map;
     }
 

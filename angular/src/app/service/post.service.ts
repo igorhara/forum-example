@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Post} from "../model/post.model";
+import {Comment} from "../model/comment.model";
 @Injectable()
 export class PostService{
 
@@ -27,4 +28,15 @@ export class PostService{
   updatePost(post:Post):Observable<Post>{
     return this.http.put<Post>("api/post",post);
   }
+
+  createComment(comment:Comment):Observable<Comment>{
+    return this.http.post<Comment>("api/post/comment",comment);
+  }
+  updateComment(comment:Comment):Observable<Comment>{
+    return this.http.put<Comment>("api/post/comment",comment);
+  }
+  loadComment(id: number):Observable<Comment> {
+    return this.http.get<Comment>('api/post/comment/'+id);
+  }
+
 }

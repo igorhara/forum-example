@@ -8,23 +8,24 @@ import {PostDetailComponent} from "./post-detail/post-detail.component";
 import {PostViewResolve} from "./post-detail/post-view.resolve";
 import {CommentEditResolve} from "./comment-form/comment-edit.resolve";
 import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {AuthenticatedCanActivate} from "./service/authentication.guard";
 
 
 const appRoutes:Routes = [
   {path:'', component:PostListComponent},
   {path:'login',component:LoginComponent},
-  {path:'post/create',component:PostFormComponent},
-  {path:'post/edit/:id',component:PostFormComponent,resolve:{post:PostEditResolve}},
+  {path:'post/create',component:PostFormComponent,canActivate:[AuthenticatedCanActivate]},
+  {path:'post/edit/:id',component:PostFormComponent,resolve:{post:PostEditResolve},canActivate:[AuthenticatedCanActivate]},
   {path:'post/view/:id',component:PostDetailComponent,resolve:{post:PostViewResolve}},
-  {path:'comment/edit/:id',component:CommentFormComponent,resolve:{post:CommentEditResolve}},
-  {path:'comment/create/:postId',component:CommentFormComponent}
+  {path:'comment/edit/:id',component:CommentFormComponent,resolve:{comment:CommentEditResolve},canActivate:[AuthenticatedCanActivate]},
+  {path:'comment/create/:postId',component:CommentFormComponent,canActivate:[AuthenticatedCanActivate]}
 ];
 @NgModule({
   imports:[
     RouterModule.forRoot(appRoutes)
   ],
   exports: [RouterModule],
-  providers:[PostEditResolve, PostViewResolve,CommentEditResolve]
+  providers:[PostEditResolve, PostViewResolve,CommentEditResolve,AuthenticatedCanActivate]
 })
 
 export class AppRoutingModule{

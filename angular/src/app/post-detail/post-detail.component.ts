@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PostService} from "../service/post.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../model/post.model";
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-post-detail',
@@ -12,7 +13,7 @@ export class PostDetailComponent implements OnInit {
 
 
   post:Post;
-  constructor(private postService:PostService,private router:Router,private route:ActivatedRoute) {
+  constructor(private postService:PostService,private router:Router,private route:ActivatedRoute,private authService:AuthService) {
     this.route.data.subscribe(
       (data:{post:Post})=>{
         if(data && data.post){
@@ -24,6 +25,10 @@ export class PostDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  canCreate(){
+    return this.authService.isLogged();
   }
 
   createComment(){

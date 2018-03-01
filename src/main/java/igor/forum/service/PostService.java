@@ -1,6 +1,7 @@
 package igor.forum.service;
 
 import igor.forum.CheckCommentOwner;
+import igor.forum.CheckIsLogged;
 import igor.forum.CheckPostOwner;
 import igor.forum.dao.CommentDao;
 import igor.forum.dao.PostDao;
@@ -8,6 +9,7 @@ import igor.forum.model.Comment;
 import igor.forum.model.Post;
 import igor.forum.model.UserForum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,9 +31,9 @@ public class PostService {
     @Autowired
     UserService userService;
 
+    @CheckIsLogged
     public Post createPost(Post post,String usernameOwner){
-        UserForum userOwner = userService.getUserByUsername(usernameOwner);
-        post.setOwner(userOwner.getUsername());
+        post.setOwner(usernameOwner);
         return createPost(post);
     }
 
@@ -40,8 +42,9 @@ public class PostService {
        return post;
     }
 
+    @CheckIsLogged
     public Comment createComment(Comment comment,String owner){
-        comment.setOwner("owner");
+        comment.setOwner(owner);
         Comment c = createComment(comment);
         return comment;
     }

@@ -37,6 +37,10 @@ export class CommentFormComponent implements OnInit {
 
   }
 
+  isCreate(){
+    return this.commentForm.controls["id"].value==null;
+  }
+
   ngOnInit() {
 
   }

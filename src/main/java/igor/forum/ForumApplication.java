@@ -29,11 +29,21 @@ public class ForumApplication {
 	@Order(1)
 	public CommandLineRunner createUser(UserService userService) {
 		return (args) -> {
-			UserForum userForum = new UserForum();
-			userForum.setUsername("first");
-			userForum.setPassword("pass");
-			userService.createUser(userForum);
-			log.info("Created user: "+userForum.getUsername());
+			{
+				UserForum userForum = new UserForum();
+				userForum.setUsername("first");
+				userForum.setPassword("pass");
+				userService.createUser(userForum);
+				log.info("Created user: "+userForum.getUsername());
+			}
+
+			{
+				UserForum userForum = new UserForum();
+				userForum.setUsername("sec");
+				userForum.setPassword("pass");
+				userService.createUser(userForum);
+				log.info("Created user: "+userForum.getUsername());
+			}
 		};
 	}
 	@Bean

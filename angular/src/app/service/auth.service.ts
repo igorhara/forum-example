@@ -23,13 +23,17 @@ export class AuthService{
   }
 
   checkLogin(){
-    this.http.get<UserDetail>("api/user/login").subscribe((u:UserDetail)=>{
+    this.checkIfLoggedInServer().subscribe((u:UserDetail)=>{
       this.userCache = u;
     })
   }
 
   isLogged():boolean{
     return this.userCache !=null;
+  }
+
+  checkIfLoggedInServer(){
+      return this.http.get<UserDetail>("api/user/login");
   }
 
   logout(){

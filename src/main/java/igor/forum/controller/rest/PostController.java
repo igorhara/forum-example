@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,8 +40,8 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post){
-       return service.createPost(post,"first");
+    public Post createPost(@RequestBody Post post, Principal principal){
+       return service.createPost(post,principal.getName());
     }
     @GetMapping(path = "/edit/{id}")
     public ResponseEntity<PostSimpleDTO> getPostForEdit(@PathVariable Long id){
@@ -49,8 +50,8 @@ public class PostController {
                 ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping(path = "/comment")
-    public Comment createComment(@RequestBody Comment comment){
-        return service.createComment(comment,"first");
+    public CommentDTO createComment(@RequestBody CommentDTO comment, Principal principal){
+        return this.convertToCommentDTO(service.createComment(this.convertToComment(comment),principal.getName()));
     }
 
     @GetMapping(path = "comment/{id}")
@@ -66,8 +67,8 @@ public class PostController {
     }
 
     @PutMapping(path = "/comment")
-    public Comment updateComment(@RequestBody Comment comment){
-        return service.updateComment(comment);
+    public CommentDTO updateComment(@RequestBody CommentDTO comment){
+        return this.convertToCommentDTO(service.updateComment(this.convertToComment(comment)));
     }
 
     @PutMapping
@@ -87,6 +88,10 @@ public class PostController {
     }
     private CommentDTO convertToCommentDTO(Comment c){
         CommentDTO map = modelMapper.map(c, CommentDTO.class);
+        return map;
+    }
+    private Comment convertToComment(CommentDTO c){
+        Comment map = modelMapper.map(c, Comment.class);
         return map;
     }
 
